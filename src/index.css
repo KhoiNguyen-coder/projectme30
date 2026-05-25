@@ -12,16 +12,28 @@ body {
   min-height: 100vh;
 }
 
-/* Animated gradient line */
+/* Animated gradient line — thicker (3px) */
 @keyframes gradient-flow {
   0% { background-position: 0% 0%; }
   100% { background-position: 0% 100%; }
 }
 
 .timeline-line {
+  width: 3px;
   background: linear-gradient(180deg, #6366f1, #8b5cf6, #ec4899, #f59e0b, #22c55e, #6366f1);
   background-size: 100% 300%;
   animation: gradient-flow 8s ease infinite;
+}
+
+.timeline-line-fade {
+  width: 3px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+}
+
+/* Shimmer on progress bar */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 /* Pulsing dot for current day */
@@ -46,21 +58,6 @@ body {
 .glow-orange { box-shadow: 0 0 20px rgba(249, 115, 22, 0.3); }
 .glow-purple { box-shadow: 0 0 20px rgba(139, 92, 246, 0.2); }
 
-/* Glassmorphism card */
-.glass-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.glass-card-light {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-}
-
 /* Scroll fade-in */
 @keyframes fade-in-up {
   from {
@@ -77,10 +74,6 @@ body {
   animation: fade-in-up 0.6s ease-out forwards;
 }
 
-/* Stagger delays */
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-
 /* Day watermark */
 .day-watermark {
   position: absolute;
@@ -94,12 +87,13 @@ body {
   user-select: none;
 }
 
-/* Hover card lift */
+/* Hover card lift — scale 1.02 + glow */
 .card-hover {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .card-hover:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.15), 0 8px 30px rgba(0, 0, 0, 0.3);
 }
 
 /* Streak fire animation */
@@ -138,4 +132,14 @@ body {
 
 .animate-reaction-pop {
   animation: reaction-pop 0.4s ease-out;
+}
+
+/* Skeleton pulse for empty days */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.5; }
+}
+
+.animate-skeleton {
+  animation: skeleton-pulse 3s ease-in-out infinite;
 }
