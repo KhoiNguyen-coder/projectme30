@@ -18,31 +18,21 @@ export default function ProgressBar({ entries, totalDays = 30 }) {
       {/* Stats row */}
       <div className="flex items-center justify-between gap-3 mb-4">
         {/* Day counter */}
-        <div className="glass-card rounded-2xl px-4 py-3 flex-1 text-center">
-          <div className="text-2xl font-black text-white">{currentDay}<span className="text-white/30">/{totalDays}</span></div>
-          <div className="text-[10px] text-white/40 uppercase tracking-widest mt-0.5">Ngày</div>
-        </div>
-
-        {/* Streak */}
-        <div className="glass-card rounded-2xl px-4 py-3 flex-1 text-center">
-          <div className="flex items-center justify-center gap-1">
-            <span className={`text-xl ${streak > 0 ? 'animate-flicker' : ''}`}>🔥</span>
-            <span className="text-2xl font-black text-orange-400">{streak}</span>
+        {[
+          { value: <>{currentDay}<span className="text-white/30">/{totalDays}</span></>, label: 'Ngày', color: 'text-white' },
+          { value: <div className="flex items-center justify-center gap-1"><span className={`text-xl ${streak > 0 ? 'animate-flicker' : ''}`}>🔥</span><span className="text-2xl font-black text-orange-400">{streak}</span></div>, label: 'Streak', raw: true },
+          { value: completedDays, label: 'Thành công', color: 'text-green-400' },
+          { value: failDays, label: 'Bại trận', color: 'text-orange-400' },
+        ].map((stat, i) => (
+          <div
+            key={i}
+            className="rounded-2xl px-4 py-3 flex-1 text-center"
+            style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.1)' }}
+          >
+            {stat.raw ? stat.value : <div className={`text-2xl font-black ${stat.color}`}>{stat.value}</div>}
+            <div className="text-[10px] text-white/40 uppercase tracking-widest mt-0.5">{stat.label}</div>
           </div>
-          <div className="text-[10px] text-white/40 uppercase tracking-widest mt-0.5">Streak</div>
-        </div>
-
-        {/* Completed */}
-        <div className="glass-card rounded-2xl px-4 py-3 flex-1 text-center">
-          <div className="text-2xl font-black text-green-400">{completedDays}</div>
-          <div className="text-[10px] text-white/40 uppercase tracking-widest mt-0.5">Thành công</div>
-        </div>
-
-        {/* Failed */}
-        <div className="glass-card rounded-2xl px-4 py-3 flex-1 text-center">
-          <div className="text-2xl font-black text-orange-400">{failDays}</div>
-          <div className="text-[10px] text-white/40 uppercase tracking-widest mt-0.5">Bại trận</div>
-        </div>
+        ))}
       </div>
 
       {/* Progress bar */}

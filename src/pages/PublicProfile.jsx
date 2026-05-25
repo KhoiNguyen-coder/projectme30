@@ -36,7 +36,7 @@ export default function PublicProfile() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className="glass-card border-b border-white/5">
+      <header className="border-b border-white/5" style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(20px)' }}>
         <div className="max-w-5xl mx-auto px-4 py-6 text-center">
           <h1 className="text-xl font-black text-white tracking-tight">
             Project<span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Me</span>30
