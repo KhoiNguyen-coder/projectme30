@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
 const REACTION_TYPES = [
-  { type: 'heart', emoji: '❤️', label: 'Tim' },
-  { type: 'fire', emoji: '🔥', label: 'Lửa' },
-  { type: 'clap', emoji: '👏', label: 'Vỗ tay' },
+  { type: 'heart', emoji: '❤️', label: 'Tim', glow: 'rgba(239, 68, 68, 0.3)' },
+  { type: 'fire', emoji: '🔥', label: 'Lửa', glow: 'rgba(249, 115, 22, 0.3)' },
+  { type: 'clap', emoji: '👏', label: 'Vỗ tay', glow: 'rgba(234, 179, 8, 0.3)' },
 ]
 
 export default function ReactionButtons({ entryId, counts = {}, onReact, disabled }) {
@@ -17,8 +17,8 @@ export default function ReactionButtons({ entryId, counts = {}, onReact, disable
   }
 
   return (
-    <div className="flex items-center gap-2 mt-3">
-      {REACTION_TYPES.map(({ type, emoji }) => {
+    <div className="flex items-center gap-2 mt-4">
+      {REACTION_TYPES.map(({ type, emoji, glow }) => {
         const count = counts[type] || 0
         const isAnimating = animating === type
 
@@ -28,18 +28,19 @@ export default function ReactionButtons({ entryId, counts = {}, onReact, disable
             onClick={() => handleReact(type)}
             disabled={disabled}
             className={`
-              inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-sm
-              border border-gray-200 transition-all duration-200
+              inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm
+              border transition-all duration-200
               ${disabled
-                ? 'opacity-60 cursor-not-allowed bg-gray-50'
-                : 'hover:bg-gray-50 hover:border-gray-300 hover:scale-105 active:scale-95 cursor-pointer'
+                ? 'opacity-50 cursor-not-allowed bg-white/5 border-white/10'
+                : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20 hover:scale-105 active:scale-95 cursor-pointer'
               }
-              ${isAnimating ? 'scale-110' : ''}
+              ${isAnimating ? 'animate-reaction-pop' : ''}
             `}
+            style={isAnimating ? { boxShadow: `0 0 20px ${glow}` } : {}}
           >
-            <span className={`${isAnimating ? 'animate-bounce' : ''}`}>{emoji}</span>
+            <span className={isAnimating ? 'animate-bounce' : ''}>{emoji}</span>
             {count > 0 && (
-              <span className="text-xs text-gray-500 font-medium">{count}</span>
+              <span className="text-xs text-white/60 font-semibold">{count}</span>
             )}
           </button>
         )

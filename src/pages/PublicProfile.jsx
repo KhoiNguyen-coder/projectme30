@@ -12,8 +12,6 @@ export default function PublicProfile() {
   const { username } = useParams()
   const [lightboxEntry, setLightboxEntry] = useState(null)
 
-  // In production, fetch user by username from Supabase
-  // For now, use mock data
   const profileUser = MOCK_USER
 
   const { entries, loading: entriesLoading } = useEntries(profileUser?.id)
@@ -29,32 +27,32 @@ export default function PublicProfile() {
 
   if (entriesLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="w-8 h-8 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-purple-400/30 border-t-purple-400 rounded-full animate-spin" />
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       {/* Header */}
-      <header className="bg-white border-b border-gray-100">
-        <div className="max-w-2xl mx-auto px-4 py-5 text-center">
-          <h1 className="text-xl font-black text-gray-900 tracking-tight">
-            Project<span className="text-green-600">Me</span>30
+      <header className="glass-card border-b border-white/5">
+        <div className="max-w-5xl mx-auto px-4 py-6 text-center">
+          <h1 className="text-xl font-black text-white tracking-tight">
+            Project<span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Me</span>30
           </h1>
-          <p className="text-sm text-gray-500 mt-1">
-            Hành trình 30 ngày của <span className="font-medium text-gray-700">{profileUser?.display_name || username}</span>
+          <p className="text-sm text-white/40 mt-1">
+            Hành trình 30 ngày của <span className="font-semibold text-white/70">{profileUser?.display_name || username}</span>
           </p>
         </div>
       </header>
 
-      <main className="max-w-2xl mx-auto py-6">
+      <main className="max-w-5xl mx-auto py-8">
         <ProgressBar entries={entries} />
 
         <div className="px-4">
           <div className="relative">
-            {Array.from({ length: 30 }, (_, i) => i + 1).map(day => {
+            {Array.from({ length: 30 }, (_, i) => i + 1).map((day, i) => {
               const entry = entriesByDay[day]
               if (entry) {
                 return (
@@ -66,17 +64,18 @@ export default function PublicProfile() {
                     onOpenLightbox={setLightboxEntry}
                     isPublic={true}
                     hasReacted={!!hasReacted(entry.id)}
+                    index={i}
                   />
                 )
               }
-              return <EmptyDay key={day} day={day} />
+              return <EmptyDay key={day} day={day} index={i} />
             })}
           </div>
 
           {entries.length >= 30 && (
-            <div className="text-center py-8">
-              <div className="text-4xl mb-3">🏆</div>
-              <h3 className="text-lg font-bold text-gray-800">
+            <div className="text-center py-12">
+              <div className="text-6xl mb-4">🏆</div>
+              <h3 className="text-2xl font-black text-white">
                 Đã hoàn thành 30 ngày!
               </h3>
             </div>

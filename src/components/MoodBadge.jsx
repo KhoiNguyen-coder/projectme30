@@ -1,7 +1,28 @@
 const MOOD_CONFIG = {
-  good: { label: 'Sung sức', emoji: '💪', color: 'bg-green-100 text-green-700' },
-  ok: { label: 'Ổn', emoji: '👌', color: 'bg-yellow-100 text-yellow-700' },
-  bad: { label: 'Mệt', emoji: '😮‍💨', color: 'bg-red-100 text-red-700' },
+  good: {
+    label: 'Sung sức',
+    emoji: '💪',
+    bg: 'bg-green-500/20',
+    text: 'text-green-300',
+    border: 'border-green-500/30',
+    glow: '0 0 12px rgba(34, 197, 94, 0.3)',
+  },
+  ok: {
+    label: 'Ổn',
+    emoji: '👌',
+    bg: 'bg-yellow-500/20',
+    text: 'text-yellow-300',
+    border: 'border-yellow-500/30',
+    glow: '0 0 12px rgba(234, 179, 8, 0.3)',
+  },
+  bad: {
+    label: 'Mệt',
+    emoji: '😮‍💨',
+    bg: 'bg-red-500/20',
+    text: 'text-red-300',
+    border: 'border-red-500/30',
+    glow: '0 0 12px rgba(239, 68, 68, 0.3)',
+  },
 }
 
 export default function MoodBadge({ mood }) {
@@ -9,7 +30,10 @@ export default function MoodBadge({ mood }) {
   if (!config) return null
 
   return (
-    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${config.color}`}>
+    <span
+      className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold border ${config.bg} ${config.text} ${config.border}`}
+      style={{ boxShadow: config.glow }}
+    >
       <span>{config.emoji}</span>
       {config.label}
     </span>

@@ -27,12 +27,12 @@ export default function LoginForm() {
 
   if (sent) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+      <div className="min-h-screen flex items-center justify-center px-4">
         <div className="max-w-sm w-full text-center">
           <div className="text-5xl mb-4">✉️</div>
-          <h2 className="text-xl font-bold text-gray-800 mb-2">Kiểm tra email!</h2>
-          <p className="text-sm text-gray-500">
-            Mình đã gửi magic link đến <strong>{email}</strong>.
+          <h2 className="text-xl font-black text-white mb-2">Kiểm tra email!</h2>
+          <p className="text-sm text-white/50">
+            Mình đã gửi magic link đến <strong className="text-white/70">{email}</strong>.
             Click link trong email để đăng nhập.
           </p>
         </div>
@@ -41,13 +41,13 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+    <div className="min-h-screen flex items-center justify-center px-4">
       <div className="max-w-sm w-full">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-black text-gray-900 tracking-tight">
-            Project<span className="text-green-600">Me</span>30
+          <h1 className="text-4xl font-black text-white tracking-tight">
+            Project<span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Me</span>30
           </h1>
-          <p className="text-sm text-gray-500 mt-2">
+          <p className="text-sm text-white/40 mt-3">
             30 ngày thay đổi. Bắt đầu hành trình của bạn.
           </p>
         </div>
@@ -59,21 +59,25 @@ export default function LoginForm() {
             onChange={e => setEmail(e.target.value)}
             placeholder="Nhập email của bạn"
             required
-            className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-800/20 focus:border-gray-400 transition-all"
+            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder:text-white/25 focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500/30 transition-all"
           />
 
-          {error && <p className="text-sm text-red-500">{error}</p>}
+          {error && <p className="text-sm text-red-400">{error}</p>}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-xl bg-gray-900 text-white font-medium text-sm hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
+            className="w-full py-3 rounded-xl font-semibold text-sm text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
+            style={{
+              background: 'linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7)',
+              boxShadow: '0 4px 20px rgba(139, 92, 246, 0.3)',
+            }}
           >
             {loading ? 'Đang gửi...' : 'Đăng nhập bằng Magic Link ✨'}
           </button>
         </form>
 
-        <p className="text-center text-xs text-gray-400 mt-6">
+        <p className="text-center text-xs text-white/20 mt-6">
           Không cần mật khẩu. Chỉ cần email.
         </p>
       </div>
