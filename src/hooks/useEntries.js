@@ -5,7 +5,7 @@ import { MOCK_ENTRIES } from '../lib/mockData'
 export function useEntries(userId) {
   const [entries, setEntries] = useState([])
   const [loading, setLoading] = useState(true)
-  const hasFetched = useRef(false)
+  const prevUserRef = useRef(null)
 
   const fetchEntries = useCallback(async () => {
     if (!isSupabaseConfigured() || !userId) {
@@ -28,10 +28,10 @@ export function useEntries(userId) {
   }, [userId])
 
   useEffect(() => {
-    if (hasFetched.current) return
-    hasFetched.current = true
+    if (userId === prevUserRef.current) return
+    prevUserRef.current = userId
     fetchEntries()
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [userId, fetchEntries])
 
   const addEntry = async (entry) => {
     if (!isSupabaseConfigured()) {

@@ -26,7 +26,7 @@ function hasReactedCheck(entryId) {
 export function useReactions(entryIds) {
   const [reactions, setReactions] = useState({})
   const [loading, setLoading] = useState(true)
-  const hasFetched = useRef(false)
+  const prevIdsRef = useRef('')
 
   const fetchReactions = useCallback(async () => {
     if (!entryIds || entryIds.length === 0) {
@@ -59,10 +59,11 @@ export function useReactions(entryIds) {
   }, [entryIds])
 
   useEffect(() => {
-    if (hasFetched.current) return
-    hasFetched.current = true
+    const idsKey = entryIds?.join(',') || ''
+    if (idsKey === prevIdsRef.current) return
+    prevIdsRef.current = idsKey
     fetchReactions()
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [entryIds, fetchReactions])
 
   const addReaction = async (entryId, type) => {
     if (hasReactedCheck(entryId)) return { error: 'Already reacted' }
