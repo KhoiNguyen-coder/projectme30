@@ -61,8 +61,8 @@ export default function HomePage() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="w-8 h-8 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-purple-400/30 border-t-purple-400 rounded-full animate-spin" />
       </div>
     )
   }
@@ -74,22 +74,22 @@ export default function HomePage() {
   const allDone = entries.length >= 30
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100">
-        <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
-          <h1 className="text-xl font-black text-gray-900 tracking-tight">
-            Project<span className="text-green-600">Me</span>30
+      <header className="sticky top-0 z-40 border-b border-white/5" style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(20px)' }}>
+        <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+          <h1 className="text-xl font-black text-white tracking-tight">
+            Project<span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Me</span>30
           </h1>
           <div className="flex items-center gap-3">
             {demoMode && (
-              <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full font-medium">
+              <span className="text-[10px] bg-purple-500/20 text-purple-300 px-2.5 py-1 rounded-full font-semibold border border-purple-500/20 uppercase tracking-wider">
                 Demo
               </span>
             )}
             <button
               onClick={signOut}
-              className="text-xs text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
+              className="text-xs text-white/30 hover:text-white/60 transition-colors cursor-pointer"
             >
               Đăng xuất
             </button>
@@ -97,18 +97,18 @@ export default function HomePage() {
         </div>
       </header>
 
-      <main className="max-w-2xl mx-auto py-6">
+      <main className="max-w-5xl mx-auto py-8">
         <ProgressBar entries={entries} />
 
         {entriesLoading ? (
           <div className="flex justify-center py-12">
-            <div className="w-8 h-8 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
+            <div className="w-8 h-8 border-2 border-purple-400/30 border-t-purple-400 rounded-full animate-spin" />
           </div>
         ) : (
           <div className="px-4">
             {/* Timeline */}
             <div className="relative">
-              {Array.from({ length: 30 }, (_, i) => i + 1).map(day => {
+              {Array.from({ length: 30 }, (_, i) => i + 1).map((day, i) => {
                 const entry = entriesByDay[day]
                 if (entry) {
                   return (
@@ -117,10 +117,11 @@ export default function HomePage() {
                       entry={entry}
                       onOpenLightbox={setLightboxEntry}
                       isPublic={false}
+                      index={i}
                     />
                   )
                 }
-                return <EmptyDay key={day} day={day} />
+                return <EmptyDay key={day} day={day} index={i} />
               })}
             </div>
 
@@ -134,12 +135,12 @@ export default function HomePage() {
             )}
 
             {allDone && (
-              <div className="text-center py-8">
-                <div className="text-4xl mb-3">🎉</div>
-                <h3 className="text-lg font-bold text-gray-800">
+              <div className="text-center py-12">
+                <div className="text-6xl mb-4">🎉</div>
+                <h3 className="text-2xl font-black text-white mb-2">
                   Chúc mừng! Bạn đã hoàn thành 30 ngày!
                 </h3>
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-white/40">
                   Hành trình tuyệt vời. Hãy chia sẻ timeline này với mọi người!
                 </p>
               </div>

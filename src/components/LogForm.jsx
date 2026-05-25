@@ -20,8 +20,8 @@ const MOOD_OPTIONS = [
   { value: 'bad', label: 'Mệt', emoji: '😮‍💨' },
 ]
 
-const MAX_IMAGE_SIZE = 5 * 1024 * 1024 // 5MB
-const MAX_VIDEO_SIZE = 50 * 1024 * 1024 // 50MB
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024
+const MAX_VIDEO_SIZE = 50 * 1024 * 1024
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp']
 const ACCEPTED_VIDEO_TYPES = ['video/mp4', 'video/quicktime']
 
@@ -128,13 +128,15 @@ export default function LogForm({ day, onSubmit, loading: externalLoading }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto mt-6 px-4">
-      <div className="border-2 border-dashed border-gray-300 rounded-2xl p-5 bg-gray-50/50">
-        <h3 className="text-lg font-bold text-gray-800 mb-4">
+    <form onSubmit={handleSubmit} className="w-full max-w-3xl mx-auto mt-8 px-4">
+      <div className="glass-card rounded-3xl p-6 relative overflow-hidden" style={{ boxShadow: '0 0 40px rgba(139, 92, 246, 0.1)' }}>
+        <div className="day-watermark text-white">{day}</div>
+
+        <h3 className="text-lg font-black text-white mb-5 relative z-10">
           📝 Log ngày {day}
         </h3>
 
-        {/* Media upload area */}
+        {/* Media upload */}
         <div className="mb-4">
           <div className="flex gap-2 mb-3">
             {[
@@ -153,11 +155,11 @@ export default function LogForm({ day, onSubmit, loading: externalLoading }) {
                   }
                 }}
                 className={`
-                  flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium
-                  transition-all cursor-pointer
+                  flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-medium
+                  transition-all cursor-pointer border
                   ${mediaType === opt.type
-                    ? 'bg-gray-800 text-white'
-                    : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-100'
+                    ? 'bg-purple-500/30 text-purple-200 border-purple-500/30'
+                    : 'bg-white/5 border-white/10 text-white/50 hover:bg-white/10 hover:text-white/70'
                   }
                 `}
               >
@@ -175,8 +177,8 @@ export default function LogForm({ day, onSubmit, loading: externalLoading }) {
           />
 
           {compressing && (
-            <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
-              <div className="w-4 h-4 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
+            <div className="flex items-center gap-2 text-sm text-purple-300 mb-3">
+              <div className="w-4 h-4 border-2 border-purple-400/30 border-t-purple-400 rounded-full animate-spin" />
               Đang nén ảnh...
             </div>
           )}
@@ -184,14 +186,14 @@ export default function LogForm({ day, onSubmit, loading: externalLoading }) {
           {mediaPreview && (
             <div className="relative mb-3">
               {mediaType === 'image' ? (
-                <img src={mediaPreview} alt="Preview" className="w-full h-48 object-cover rounded-lg" />
+                <img src={mediaPreview} alt="Preview" className="w-full h-48 object-cover rounded-xl" />
               ) : (
-                <video src={mediaPreview} controls className="w-full h-48 object-cover rounded-lg" />
+                <video src={mediaPreview} controls className="w-full h-48 object-cover rounded-xl" />
               )}
               <button
                 type="button"
                 onClick={removeMedia}
-                className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/50 hover:bg-black/70 flex items-center justify-center cursor-pointer"
+                className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-md flex items-center justify-center cursor-pointer"
               >
                 <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -207,7 +209,7 @@ export default function LogForm({ day, onSubmit, loading: externalLoading }) {
           onChange={e => setCaption(e.target.value)}
           placeholder="Hôm nay thế nào? Viết vài dòng cảm nhận..."
           rows={3}
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-800/20 focus:border-gray-400 resize-none transition-all"
+          className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder:text-white/25 focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500/30 resize-none transition-all"
         />
 
         {/* Mood */}
@@ -218,11 +220,11 @@ export default function LogForm({ day, onSubmit, loading: externalLoading }) {
               type="button"
               onClick={() => setMood(opt.value)}
               className={`
-                flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm cursor-pointer
-                transition-all
+                flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm cursor-pointer
+                transition-all border
                 ${mood === opt.value
-                  ? 'bg-gray-800 text-white ring-2 ring-gray-800/20'
-                  : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-100'
+                  ? 'bg-purple-500/30 text-purple-200 border-purple-500/30 ring-1 ring-purple-500/20'
+                  : 'bg-white/5 border-white/10 text-white/40 hover:bg-white/10 hover:text-white/60'
                 }
               `}
             >
@@ -240,10 +242,10 @@ export default function LogForm({ day, onSubmit, loading: externalLoading }) {
               onClick={() => toggleTag(tag.value)}
               className={`
                 px-2.5 py-1 rounded-full text-xs font-medium cursor-pointer
-                transition-all
+                transition-all border
                 ${tags.includes(tag.value)
-                  ? 'bg-gray-800 text-white'
-                  : 'bg-white border border-gray-200 text-gray-500 hover:bg-gray-100'
+                  ? 'bg-purple-500/30 text-purple-200 border-purple-500/30'
+                  : 'bg-white/5 border-white/10 text-white/30 hover:bg-white/10 hover:text-white/50'
                 }
               `}
             >
@@ -254,14 +256,18 @@ export default function LogForm({ day, onSubmit, loading: externalLoading }) {
 
         {/* Error */}
         {error && (
-          <p className="text-sm text-red-500 mb-3">{error}</p>
+          <p className="text-sm text-red-400 mb-3">{error}</p>
         )}
 
         {/* Submit */}
         <button
           type="submit"
           disabled={externalLoading}
-          className="w-full py-2.5 rounded-xl bg-gray-900 text-white font-medium text-sm hover:bg-gray-800 active:bg-gray-950 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
+          className="w-full py-3 rounded-xl font-semibold text-sm transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed text-white"
+          style={{
+            background: 'linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7)',
+            boxShadow: '0 4px 20px rgba(139, 92, 246, 0.3)',
+          }}
         >
           {externalLoading ? 'Đang lưu...' : 'Lưu ngày này ✨'}
         </button>
